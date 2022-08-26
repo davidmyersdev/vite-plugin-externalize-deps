@@ -1,6 +1,6 @@
 # vite-plugin-externalize-deps
 
-A configurable Vite plugin to help you manage your external project dependencies. By default, `dependencies` and `peerDependencies` defined in your `package.json` are externalized.
+A configurable Vite plugin to help externalize your dependencies (including [subpaths](https://nodejs.org/api/packages.html#subpath-patterns)).
 
 ## Getting Started
 
