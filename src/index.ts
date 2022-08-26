@@ -26,7 +26,7 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
 
         if (optionsResolved.deps) {
           Object.keys(dependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`${dep}(?:/.+)?`)
+            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
             externalDeps.add(depMatcher)
           })
@@ -34,7 +34,7 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
 
         if (optionsResolved.peerDeps) {
           Object.keys(peerDependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`${dep}(?:/.+)?`)
+            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
             externalDeps.add(depMatcher)
           })

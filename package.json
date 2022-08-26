@@ -28,7 +28,8 @@
     }
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vite build -c test/vite.config.ts"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
