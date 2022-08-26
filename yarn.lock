@@ -5,10 +5,10 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"#ansi-styles@chalk/ansi-styles":
+"#ansi-styles@npm:ansi-styles@6.1.0":
   version: 6.1.0
-  resolution: "#ansi-styles@https://github.com/chalk/ansi-styles.git#commit=79a21b83f46e92a5c5a023dcf6218d7a3c470650"
-  checksum: b466f03881d6af1485828a354604a009328ff5832fc45f0160fe19b746b9bdcdddd6a0e375c38dbd70f3f200a136fc1b192b0831eccc46790b3820c0d5dd15d6
+  resolution: "ansi-styles@npm:6.1.0"
+  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
   languageName: node
   linkType: hard
 

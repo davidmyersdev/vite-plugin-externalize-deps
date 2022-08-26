@@ -45,15 +45,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["#ansi-styles", [\
-        ["https://github.com/chalk/ansi-styles.git#commit=79a21b83f46e92a5c5a023dcf6218d7a3c470650", {\
-          "packageLocation": "./.yarn/cache/#ansi-styles-https-0449d2f6ea-b466f03881.zip/node_modules/#ansi-styles/",\
-          "packageDependencies": [\
-            ["#ansi-styles", "https://github.com/chalk/ansi-styles.git#commit=79a21b83f46e92a5c5a023dcf6218d7a3c470650"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@esbuild/linux-loong64", [\
         ["npm:0.14.54", {\
           "packageLocation": "./.yarn/unplugged/@esbuild-linux-loong64-npm-0.14.54-a70f90ee9a/node_modules/@esbuild/linux-loong64/",\
@@ -262,6 +253,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["ansi-styles", [\
+        ["npm:6.1.0", {\
+          "packageLocation": "./.yarn/cache/ansi-styles-npm-6.1.0-4f6a594d04-7a7f8528c0.zip/node_modules/ansi-styles/",\
+          "packageDependencies": [\
+            ["ansi-styles", "npm:6.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["aproba", [\
         ["npm:2.0.0", {\
           "packageLocation": "./.yarn/cache/aproba-npm-2.0.0-8716bcfde6-5615cadcfb.zip/node_modules/aproba/",\
@@ -351,7 +351,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/chalk-npm-5.0.1-6afcb94227-7b45300372.zip/node_modules/chalk/",\
           "packageDependencies": [\
             ["chalk", "npm:5.0.1"],\
-            ["#ansi-styles", "https://github.com/chalk/ansi-styles.git#commit=79a21b83f46e92a5c5a023dcf6218d7a3c470650"],\
+            ["#ansi-styles", [\
+              "ansi-styles",\
+              "npm:6.1.0"\
+            ]],\
             ["#supports-color", [\
               "supports-color",\
               "npm:9.2.2"\
