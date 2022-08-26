@@ -1,0 +1,6 @@
+*.log
+.DS_Store
+.yarn/install-state.gz
+dist
+node_modules
+package.tgz

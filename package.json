@@ -1,0 +1,44 @@
+{
+  "name": "vite-plugin-externalize-deps",
+  "description": "A configurable Vite plugin to help you manage your external project dependencies",
+  "version": "0.1.0",
+  "author": "David Myers <david@voracious.dev>",
+  "funding": "https://github.com/sponsors/voracious",
+  "license": "MIT",
+  "keywords": [
+    "dependencies",
+    "dev",
+    "utils",
+    "vite",
+    "vite-plugin"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "packageManager": "yarn@3.2.3",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/node": "^18.7.13",
+    "add": "^2.0.6",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.9",
+    "vite-plugin-inspect": "^0.6.0",
+    "yarn": "^1.22.19"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1"
+  }
+}
