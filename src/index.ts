@@ -4,6 +4,7 @@ import type { Plugin } from 'vite'
 
 interface UserOptions {
   deps: boolean,
+  optionalDeps: boolean,
   peerDeps: boolean,
   useFile: string,
 }
@@ -11,6 +12,7 @@ interface UserOptions {
 export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
   const optionsResolved: UserOptions = {
     deps: true,
+    optionalDeps: true,
     peerDeps: true,
     useFile: join(process.cwd(), 'package.json'),
     // User options take priority.
