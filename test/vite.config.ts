@@ -15,6 +15,7 @@ export default defineConfig({
     // We need nodeResolve to resolve dependencies of chalk.
     nodeResolve(),
     externalizeDeps({
+      devDeps: true,
       useFile: './test/test.json',
     }),
   ],

@@ -5,6 +5,7 @@ import type { Plugin } from 'vite'
 
 interface UserOptions {
   deps: boolean,
+  devDeps: boolean,
   nodeBuiltins: boolean,
   optionalDeps: boolean,
   peerDeps: boolean,
@@ -18,6 +19,7 @@ const parseFile = (file: string) => {
 export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
   const optionsResolved: UserOptions = {
     deps: true,
+    devDeps: false,
     nodeBuiltins: true,
     optionalDeps: true,
     peerDeps: true,
@@ -31,10 +33,23 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
     config: (_config, _env) => {
       if (existsSync(optionsResolved.useFile)) {
         const externalDeps = new Set<RegExp>()
-        const { dependencies = {}, optionalDependencies = {}, peerDependencies = {} } = parseFile(optionsResolved.useFile)
+        const {
+          dependencies = {},
+          devDependencies = {},
+          optionalDependencies = {},
+          peerDependencies = {},
+        } = parseFile(optionsResolved.useFile)
 
         if (optionsResolved.deps) {
           Object.keys(dependencies).forEach((dep) => {
+            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
+
+            externalDeps.add(depMatcher)
+          })
+        }
+
+        if (optionsResolved.devDeps) {
+          Object.keys(devDependencies).forEach((dep) => {
             const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
             externalDeps.add(depMatcher)

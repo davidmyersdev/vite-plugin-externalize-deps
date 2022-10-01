@@ -39,6 +39,7 @@ Pass an object to `externalizeDeps` to override the default configuration.
 // These are the default values.
 externalizeDeps({
   deps: true,
+  devDeps: false,
   nodeBuiltins: true,
   optionalDeps: true,
   peerDeps: true,
