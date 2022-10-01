@@ -1,9 +1,11 @@
 import { existsSync, readFileSync } from 'node:fs'
+import { builtinModules } from 'node:module'
 import { join } from 'node:path'
 import type { Plugin } from 'vite'
 
 interface UserOptions {
   deps: boolean,
+  nodeBuiltins: boolean,
   optionalDeps: boolean,
   peerDeps: boolean,
   useFile: string,
@@ -16,6 +18,7 @@ const parseFile = (file: string) => {
 export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
   const optionsResolved: UserOptions = {
     deps: true,
+    nodeBuiltins: true,
     optionalDeps: true,
     peerDeps: true,
     useFile: join(process.cwd(), 'package.json'),
@@ -35,6 +38,14 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
             const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
             externalDeps.add(depMatcher)
+          })
+        }
+
+        if (optionsResolved.nodeBuiltins) {
+          builtinModules.forEach((builtinModule) => {
+            const builtinMatcher = new RegExp(`^(?:node:)?${builtinModule}$`)
+
+            externalDeps.add(builtinMatcher)
           })
         }
 
