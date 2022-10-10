@@ -35,8 +35,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@rollup/plugin-node-resolve", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:13.3.0"],\
             ["@types/node", "npm:18.7.13"],\
-            ["add", "npm:2.0.6"],\
-            ["chalk", "npm:5.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.2#~builtin<compat/typescript>::version=4.8.2&hash=a1c5e5"],\
             ["vite", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:3.0.9"],\
             ["vite-plugin-inspect", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:0.6.0"],\
@@ -202,15 +200,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["add", [\
-        ["npm:2.0.6", {\
-          "packageLocation": "./.yarn/cache/add-npm-2.0.6-c96b78d852-e2d23d4049.zip/node_modules/add/",\
-          "packageDependencies": [\
-            ["add", "npm:2.0.6"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["agent-base", [\
         ["npm:6.0.2", {\
           "packageLocation": "./.yarn/cache/agent-base-npm-6.0.2-428f325a93-f52b6872cc.zip/node_modules/agent-base/",\
@@ -249,15 +238,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/ansi-regex-npm-5.0.1-c963a48615-2aa4bb54ca.zip/node_modules/ansi-regex/",\
           "packageDependencies": [\
             ["ansi-regex", "npm:5.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["ansi-styles", [\
-        ["npm:6.1.0", {\
-          "packageLocation": "./.yarn/cache/ansi-styles-npm-6.1.0-4f6a594d04-7a7f8528c0.zip/node_modules/ansi-styles/",\
-          "packageDependencies": [\
-            ["ansi-styles", "npm:6.1.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -342,23 +322,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ssri", "npm:9.0.1"],\
             ["tar", "npm:6.1.11"],\
             ["unique-filename", "npm:2.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["chalk", [\
-        ["npm:5.0.1", {\
-          "packageLocation": "./.yarn/cache/chalk-npm-5.0.1-6afcb94227-7b45300372.zip/node_modules/chalk/",\
-          "packageDependencies": [\
-            ["chalk", "npm:5.0.1"],\
-            ["#ansi-styles", [\
-              "ansi-styles",\
-              "npm:6.1.0"\
-            ]],\
-            ["#supports-color", [\
-              "supports-color",\
-              "npm:9.2.2"\
-            ]]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1527,15 +1490,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["supports-color", [\
-        ["npm:9.2.2", {\
-          "packageLocation": "./.yarn/cache/supports-color-npm-9.2.2-d003069e84-976d848774.zip/node_modules/supports-color/",\
-          "packageDependencies": [\
-            ["supports-color", "npm:9.2.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["supports-preserve-symlinks-flag", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/supports-preserve-symlinks-flag-npm-1.0.0-f17c4d0028-53b1e247e6.zip/node_modules/supports-preserve-symlinks-flag/",\
@@ -1662,8 +1616,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["vite-plugin-externalize-deps", "workspace:."],\
             ["@rollup/plugin-node-resolve", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:13.3.0"],\
             ["@types/node", "npm:18.7.13"],\
-            ["add", "npm:2.0.6"],\
-            ["chalk", "npm:5.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.8.2#~builtin<compat/typescript>::version=4.8.2&hash=a1c5e5"],\
             ["vite", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:3.0.9"],\
             ["vite-plugin-inspect", "virtual:a2e3592fd897510644103cb35942982ee1d2d2dcd6863a7847acec4952278a5ee291fbd2e8b8ef15ece8cba447814b571e88c0e3d330e2c4275bda5ff4ac6fa2#npm:0.6.0"],\

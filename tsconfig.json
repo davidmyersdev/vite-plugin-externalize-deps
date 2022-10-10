@@ -2,10 +2,11 @@
   "compilerOptions": {
     "alwaysStrict": true,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Node",
-    "noImplicitReturns": false,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",

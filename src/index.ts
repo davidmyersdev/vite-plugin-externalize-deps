@@ -31,64 +31,66 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
   return {
     name: 'vite-plugin-externalize-deps',
     config: (_config, _env) => {
-      if (existsSync(optionsResolved.useFile)) {
-        const externalDeps = new Set<RegExp>()
-        const {
-          dependencies = {},
-          devDependencies = {},
-          optionalDependencies = {},
-          peerDependencies = {},
-        } = parseFile(optionsResolved.useFile)
+      if (!existsSync(optionsResolved.useFile)) {
+        throw new Error(`[vite-plugin-externalize-deps] The file specified for useFile (${optionsResolved.useFile}) does not exist.`)
+      }
 
-        if (optionsResolved.deps) {
-          Object.keys(dependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
+      const externalDeps = new Set<RegExp>()
+      const {
+        dependencies = {},
+        devDependencies = {},
+        optionalDependencies = {},
+        peerDependencies = {},
+      } = parseFile(optionsResolved.useFile)
 
-            externalDeps.add(depMatcher)
-          })
-        }
+      if (optionsResolved.deps) {
+        Object.keys(dependencies).forEach((dep) => {
+          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
-        if (optionsResolved.devDeps) {
-          Object.keys(devDependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
+          externalDeps.add(depMatcher)
+        })
+      }
 
-            externalDeps.add(depMatcher)
-          })
-        }
+      if (optionsResolved.devDeps) {
+        Object.keys(devDependencies).forEach((dep) => {
+          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
-        if (optionsResolved.nodeBuiltins) {
-          builtinModules.forEach((builtinModule) => {
-            const builtinMatcher = new RegExp(`^(?:node:)?${builtinModule}$`)
+          externalDeps.add(depMatcher)
+        })
+      }
 
-            externalDeps.add(builtinMatcher)
-          })
-        }
+      if (optionsResolved.nodeBuiltins) {
+        builtinModules.forEach((builtinModule) => {
+          const builtinMatcher = new RegExp(`^(?:node:)?${builtinModule}$`)
 
-        if (optionsResolved.optionalDeps) {
-          Object.keys(optionalDependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
+          externalDeps.add(builtinMatcher)
+        })
+      }
 
-            externalDeps.add(depMatcher)
-          })
-        }
+      if (optionsResolved.optionalDeps) {
+        Object.keys(optionalDependencies).forEach((dep) => {
+          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
-        if (optionsResolved.peerDeps) {
-          Object.keys(peerDependencies).forEach((dep) => {
-            const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
+          externalDeps.add(depMatcher)
+        })
+      }
 
-            externalDeps.add(depMatcher)
-          })
-        }
+      if (optionsResolved.peerDeps) {
+        Object.keys(peerDependencies).forEach((dep) => {
+          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
 
-        return {
-          build: {
-            rollupOptions: {
-              external: [
-                ...externalDeps.values(),
-              ],
-            },
+          externalDeps.add(depMatcher)
+        })
+      }
+
+      return {
+        build: {
+          rollupOptions: {
+            external: [
+              ...externalDeps.values(),
+            ],
           },
-        }
+        },
       }
     },
   }
