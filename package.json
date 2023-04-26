@@ -32,7 +32,7 @@
     "build": "vite build && tsc",
     "test": "vite build -c test/vite.config.ts"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "pnpm@8.3.1",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@types/node": "^18.7.13",
