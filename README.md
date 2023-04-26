@@ -40,9 +40,23 @@ Pass an object to `externalizeDeps` to override the default configuration.
 externalizeDeps({
   deps: true,
   devDeps: false,
+  except: [],
   nodeBuiltins: true,
   optionalDeps: true,
   peerDeps: true,
   useFile: join(process.cwd(), 'package.json'),
+})
+```
+
+To _include_ specific dependencies in your bundle, you can add exceptions with the `except` option.
+
+```ts
+externalizeDeps({
+  except: [
+    // Match exact values with strings.
+    '@some/obscure/dependency',
+    // Or match patterns with regular expressions.
+    /^@some\/obscure(?:\/.+)?$/,
+  ],
 })
 ```
