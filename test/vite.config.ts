@@ -16,6 +16,9 @@ export default defineConfig({
     nodeResolve(),
     externalizeDeps({
       devDeps: true,
+      include: [
+        /^unlisted-dep(?:\/.*)?$/,
+      ],
       useFile: './test/test.json',
     }),
   ],

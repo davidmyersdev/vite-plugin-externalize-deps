@@ -7,6 +7,22 @@ interface UserOptions {
   deps: boolean,
   devDeps: boolean,
   except: Array<string | RegExp>,
+  /**
+   * Additional dependencies to externalize.
+   *
+   * @example
+   *
+   * ```ts
+   * externalizeDeps({
+   *   include: [
+   *     /^unlisted-dep(?:\/.*)?$/,
+   *   ],
+   * })
+   * ```
+   *
+   * @default []
+   */
+  include: Array<string | RegExp>,
   nodeBuiltins: boolean,
   optionalDeps: boolean,
   peerDeps: boolean,
@@ -38,6 +54,12 @@ const parseFile = (file: string) => {
  *         // Or match patterns with regular expressions.
  *         /^@some\/obscure(?:\/.+)?$/,
  *       ],
+ *       include: [
+ *         // Match exact values with strings.
+ *         '@some/obscure/dependency',
+ *         // Or match patterns with regular expressions.
+ *         /^@some\/obscure(?:\/.+)?$/,
+ *       ],
  *       nodeBuiltins: true,
  *       optionalDeps: true,
  *       peerDeps: true,
@@ -52,6 +74,7 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
     deps: true,
     devDeps: false,
     except: [],
+    include: [],
     nodeBuiltins: true,
     optionalDeps: true,
     peerDeps: true,
@@ -116,6 +139,7 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
       }
 
       const depMatchers = Array.from(externalDeps)
+
       const isException = (id: string) => {
         return optionsResolved.except.some((exception) => {
           if (typeof exception === 'string') {
@@ -126,12 +150,26 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
         })
       }
 
+      const isIncluded = (id: string) => {
+        return optionsResolved.include.some((included) => {
+          if (typeof included === 'string') {
+            return included === id
+          }
+
+          return included.test(id)
+        })
+      }
+
       return {
         build: {
           rollupOptions: {
             external: (id) => {
               if (isException(id)) {
                 return false
+              }
+
+              if (isIncluded(id)) {
+                return true
               }
 
               return depMatchers.some((depMatcher) => depMatcher.test(id))

@@ -7,5 +7,7 @@ import { defineConfig } from 'vite'
 import esbuild from 'esbuild'
 // @ts-ignore
 import rollup from 'rollup'
+// @ts-ignore
+import hello from 'unlisted-dep'
 
-console.log(path, path2, resolve, chalk, esbuild, defineConfig, rollup)
+console.log(path, path2, resolve, chalk, esbuild, defineConfig, rollup, hello)
