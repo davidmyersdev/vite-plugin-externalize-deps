@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 devDependencies:
   '@rollup/plugin-node-resolve':
     specifier: ^15.0.1
@@ -13,6 +17,9 @@ devDependencies:
   vite:
     specifier: ^4.0.4
     version: 4.0.4(@types/node@18.7.13)
+  vite-plugin-externalize-deps:
+    specifier: ^0.7.0
+    version: 0.7.0(vite@4.0.4)
   vite-plugin-inspect:
     specifier: ^0.7.15
     version: 0.7.15(vite@4.0.4)
@@ -476,6 +483,14 @@ packages:
   /universalify@2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
+    dev: true
+
+  /vite-plugin-externalize-deps@0.7.0(vite@4.0.4):
+    resolution: {integrity: sha512-do2gPrR79Tm8UKcqsw3RTAtN4YO8GkVRBckWdJWINZ3Qdp3KN9S1oyUZxKszTB/iyg4zdOUweLOeBI8t86QVow==}
+    peerDependencies:
+      vite: ^2.0.0 || ^3.0.0 || ^4.0.0
+    dependencies:
+      vite: 4.0.4(@types/node@18.7.13)
     dev: true
 
   /vite-plugin-inspect@0.7.15(vite@4.0.4):
