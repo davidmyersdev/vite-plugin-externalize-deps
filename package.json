@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-externalize-deps",
   "description": "A configurable Vite plugin to help externalize your dependencies (includes subpaths)",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "author": "David Myers <david@voracious.dev>",
   "funding": "https://github.com/sponsors/voracious",
   "homepage": "https://github.com/voracious/vite-plugin-externalize-deps",
