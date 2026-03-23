@@ -31,6 +31,10 @@ export default defineConfig({
 })
 ```
 
+The plugin externalizes matching imports during build resolution, so it can be used alongside your own `build.rollupOptions.external` entries.
+
+This repo verifies compatibility across Vite 2 through 8 with the `pnpm test:matrix` suite.
+
 ### Configuration
 
 Pass an object to `externalizeDeps` to override the default configuration.
@@ -41,6 +45,7 @@ externalizeDeps({
   deps: true,
   devDeps: false,
   except: [],
+  include: [],
   nodeBuiltins: true,
   optionalDeps: true,
   peerDeps: true,
