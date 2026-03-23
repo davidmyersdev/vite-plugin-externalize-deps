@@ -30,19 +30,18 @@
   },
   "scripts": {
     "build": "vite build && tsc",
-    "test": "vite build -c test/vite.config.ts"
+    "test": "vitest run",
+    "test:matrix": "node ./test/compatibility-matrix.mjs"
   },
   "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81",
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^16.0.1",
     "@types/node": "^22.16.0",
     "typescript": "^5.8.3",
-    "vite": "^7.0.3",
-    "vite-plugin-externalize-deps": "^0.9.0",
-    "vite-plugin-inspect": "^11.3.0"
+    "vite": "^8.0.2",
+    "vitest": "^4.1.0"
   },
   "peerDependencies": {
-    "vite": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
+    "vite": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "publishConfig": {
     "access": "public"

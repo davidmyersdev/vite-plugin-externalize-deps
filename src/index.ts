@@ -29,8 +29,33 @@ interface UserOptions {
   useFile: string,
 }
 
-const parseFile = (file: string) => {
-  return JSON.parse(readFileSync(file).toString())
+interface PackageJson {
+  dependencies?: Record<string, string>,
+  devDependencies?: Record<string, string>,
+  optionalDependencies?: Record<string, string>,
+  peerDependencies?: Record<string, string>,
+}
+
+const parseFile = (file: string): PackageJson => {
+  return JSON.parse(readFileSync(file, 'utf8'))
+}
+
+const matchesDependency = (id: string, dependency: string) => {
+  return id === dependency || id.startsWith(`${dependency}/`)
+}
+
+const createBuiltinIdSet = () => {
+  const builtinIds = new Set<string>()
+
+  builtinModules.forEach((builtinModule) => {
+    builtinIds.add(builtinModule)
+
+    if (!builtinModule.startsWith('node:')) {
+      builtinIds.add(`node:${builtinModule}`)
+    }
+  })
+
+  return builtinIds
 }
 
 /**
@@ -83,100 +108,106 @@ export const externalizeDeps = (options: Partial<UserOptions> = {}): Plugin => {
     ...options,
   }
 
+  const builtinIds = optionsResolved.nodeBuiltins
+    ? createBuiltinIdSet()
+    : new Set<string>()
+  const dependencyIds = new Set<string>()
+  let isInitialized = false
+
+  const isException = (id: string) => {
+    return optionsResolved.except.some((exception) => {
+      if (typeof exception === 'string') {
+        return exception === id
+      }
+
+      return exception.test(id)
+    })
+  }
+
+  const isIncluded = (id: string) => {
+    return optionsResolved.include.some((included) => {
+      if (typeof included === 'string') {
+        return included === id
+      }
+
+      return included.test(id)
+    })
+  }
+
+  const initialize = () => {
+    if (isInitialized) {
+      return
+    }
+
+    if (!existsSync(optionsResolved.useFile)) {
+      throw new Error(`[vite-plugin-externalize-deps] The file specified for useFile (${optionsResolved.useFile}) does not exist.`)
+    }
+
+    const {
+      dependencies = {},
+      devDependencies = {},
+      optionalDependencies = {},
+      peerDependencies = {},
+    } = parseFile(optionsResolved.useFile)
+
+    if (optionsResolved.deps) {
+      Object.keys(dependencies).forEach((dependency) => {
+        dependencyIds.add(dependency)
+      })
+    }
+
+    if (optionsResolved.devDeps) {
+      Object.keys(devDependencies).forEach((dependency) => {
+        dependencyIds.add(dependency)
+      })
+    }
+
+    if (optionsResolved.optionalDeps) {
+      Object.keys(optionalDependencies).forEach((dependency) => {
+        dependencyIds.add(dependency)
+      })
+    }
+
+    if (optionsResolved.peerDeps) {
+      Object.keys(peerDependencies).forEach((dependency) => {
+        dependencyIds.add(dependency)
+      })
+    }
+
+    isInitialized = true
+  }
+
   return {
     name: 'vite-plugin-externalize-deps',
-    config: (_config, _env) => {
-      if (!existsSync(optionsResolved.useFile)) {
-        throw new Error(`[vite-plugin-externalize-deps] The file specified for useFile (${optionsResolved.useFile}) does not exist.`)
+    apply: 'build',
+    enforce: 'pre',
+    configResolved: () => {
+      initialize()
+    },
+    resolveId: (id: string) => {
+      initialize()
+
+      if (isException(id)) {
+        return null
       }
 
-      const externalDeps = new Set<RegExp>()
-      const {
-        dependencies = {},
-        devDependencies = {},
-        optionalDependencies = {},
-        peerDependencies = {},
-      } = parseFile(optionsResolved.useFile)
-
-      if (optionsResolved.deps) {
-        Object.keys(dependencies).forEach((dep) => {
-          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
-
-          externalDeps.add(depMatcher)
-        })
+      if (isIncluded(id) || builtinIds.has(id)) {
+        return {
+          external: true,
+          id,
+        }
       }
 
-      if (optionsResolved.devDeps) {
-        Object.keys(devDependencies).forEach((dep) => {
-          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
-
-          externalDeps.add(depMatcher)
-        })
-      }
-
-      if (optionsResolved.nodeBuiltins) {
-        builtinModules.forEach((builtinModule) => {
-          const builtinMatcher = new RegExp(`^(?:node:)?${builtinModule}$`)
-
-          externalDeps.add(builtinMatcher)
-        })
-      }
-
-      if (optionsResolved.optionalDeps) {
-        Object.keys(optionalDependencies).forEach((dep) => {
-          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
-
-          externalDeps.add(depMatcher)
-        })
-      }
-
-      if (optionsResolved.peerDeps) {
-        Object.keys(peerDependencies).forEach((dep) => {
-          const depMatcher = new RegExp(`^${dep}(?:/.+)?$`)
-
-          externalDeps.add(depMatcher)
-        })
-      }
-
-      const depMatchers = Array.from(externalDeps)
-
-      const isException = (id: string) => {
-        return optionsResolved.except.some((exception) => {
-          if (typeof exception === 'string') {
-            return exception === id
+      for (const dependency of dependencyIds) {
+        if (matchesDependency(id, dependency)) {
+          return {
+            external: true,
+            id,
           }
-
-          return exception.test(id)
-        })
+        }
       }
 
-      const isIncluded = (id: string) => {
-        return optionsResolved.include.some((included) => {
-          if (typeof included === 'string') {
-            return included === id
-          }
-
-          return included.test(id)
-        })
-      }
-
-      return {
-        build: {
-          rollupOptions: {
-            external: (id) => {
-              if (isException(id)) {
-                return false
-              }
-
-              if (isIncluded(id)) {
-                return true
-              }
-
-              return depMatchers.some((depMatcher) => depMatcher.test(id))
-            },
-          },
-        },
-      }
+      return null
     },
   }
 }
